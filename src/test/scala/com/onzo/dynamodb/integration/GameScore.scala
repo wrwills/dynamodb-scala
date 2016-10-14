@@ -42,6 +42,7 @@ object GameScore {
   val tableName = "GameScores"
   val globalSecondaryIndexName = "GameTitleIndex"
 
+  // COMMENT: is there a way to do this with less boilerplate?
   val tableRequest =
     new CreateTableRequest()
       .withTableName(GameScore.tableName)
@@ -69,6 +70,7 @@ object GameScore {
           )
       )
 
+  // TODO: there seems to be a fair amount of boilerplate required for
   object Attributes {
     val userId = "UserId"
     val gameTitle = "GameTitle"
@@ -84,6 +86,7 @@ object GameScore {
 
     private val fmt = ISODateTimeFormat.dateTime
 
+    // TODO:  why encode datetime as string?  would Long be more efficient?
     val * : TableMapper[GameScore] = {
       PrimaryKey[String]("UserId") ::
         RangeKey[String]("GameTitle") ::

@@ -37,6 +37,7 @@ object Reply {
   val tableName = "Reply"
   val secondaryIndexName = "PostedByIndex"
 
+  // COMMENT:  this code doesn't actually appear to get used
   val tableRequest =
     new CreateTableRequest()
       .withTableName(Reply.tableName)

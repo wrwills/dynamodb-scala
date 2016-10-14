@@ -12,6 +12,9 @@ abstract class Table[T](override val tableName: String) extends DynamoDBSerializ
 
   override def rangeAttributeName: Option[String] = *.rangeKey.map(_._1)
 
+  // TODO: calling get is always worrying in a scala codebase
+  // would it perhaps be best to make primary key not optional in TableMapper
+  // and to have encodeKey not take an optional key?
   override def primaryKeyOf(obj: T): Map[String, AttributeValue] = {
     Map(encodeKey(obj, *.primaryKey).get) ++ encodeKey(obj, *.rangeKey)
   }
