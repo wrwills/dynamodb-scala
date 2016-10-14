@@ -1,4 +1,4 @@
-### Commentary on Code
+### Commentary on dynamadb-scala
 
 
 In terms of code style, I don't find this displeasing.  I have put a few comments in various places in the codebase,
@@ -6,8 +6,6 @@ In terms of code style, I don't find this displeasing.  I have put a few comment
 
 I suppose the main thing that struck me about the code in this project is that it seemed to require a fair amount of
 boilerplate to set up.
-
-
 
 I believe that one issue with dynamo db is that it doesn't allow for multi column keys.  One way around this is to
 make a tuple a primary key.  However this is not possible:
@@ -21,7 +19,7 @@ scala> Key[(String,String)]("seq")
 I suspect it could be useful to add some type instances for Encoder.
 
 
-Doesn't appear to allow for nesting objects.  eg in the tests GameScore is defined as follows: 
+dynamoddb-scala doesn't appear to allow for nesting objects.  eg in the tests GameScore is defined as follows: 
 
 ```scala
 case class GameScore(
@@ -45,7 +43,7 @@ case class Foo(a: String)
 case class Bar(b: String, foo: Foo)
 ```
 
-and to be able to use tho sewith DynamoDb, but the way TableMapper and Key work  makes this difficult:
+and to be able to use those with DynamoDb, but the way TableMapper and Key work  makes this difficult:
 
 ```scala
 scala> Key[Foo]("seq")
@@ -88,5 +86,6 @@ There should be a way to have something similar to gen that instead produced and
 a primary keys etc.
 
 Anothter approach that occurs to me would be to use something more like Quill which uses macros to map case classes to 
-datastores.  Quill does have an implementation for Cassandra.  Perhaps it could be adapted?
+datastores.  Quill does have an implementation for Cassandra.  Perhaps it could be adapted?  Macros are sometimes contentious
+but sometimes they can be simpler than using shapeless (and without increasing compile times so much).
 
